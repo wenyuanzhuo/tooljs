@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>css小册第一期</title>
+    <style>
+        dl {
+            line-height: 1.5;
+            margin: 0; padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+        dd {
+            word-break: break-all;    
+            text-align: right;
+            margin-left: 0;
+        }
+        dd:empty::before {
+            content: '-';    
+            color: #999;
+        }
+        .more {
+            text-align: left;
+            display: inline-block;
+        }
+        /* 定位*/
+        /* dt {
+            position: absolute;
+        }
+        dd {
+            margin-left: 5em;
+        } */
+        /* flex*/
+        /* dl {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        dt {
+            width: 5em;
+        }
+        dd {
+            width: calc(100% - 5em);
+        } */
+        /* 流的特性 */
+        /* dd {
+           margin-left: 5em;
+           margin-top: -1.5em;
+        }
+        */
+        /* BFC */
+        dt {
+            width: 5em;
+            float: left;
+        }
+        dd {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <dl>
+        <dt>手机系统</dt>
+        <dd>ios</dd>
+        <dt>收货地址</dt>
+        <dd>
+            <span class="more">拉埃啦啦啦啦啦啦啦啦啦啦啦啦啦啦拉埃啦啦啦啦啦啦啦啦啦啦啦为二人</span>
+        </dd>
+        <dt>我是空的</dt>
+        <dd></dd>
+    </dl>
+</body>
+</html>

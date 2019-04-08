@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" />
+		<style type="text/css">
+			.main {
+				width: 300px;
+				height: 100px;
+				border: 1px solid red;
+				border-radius: 15px;
+				overflow: hidden;
+                transform: scale(1);
+                /* transform: rotate(0) */
+			}
+			.con {
+				display: block;
+				overflow: scroll;
+				white-space: nowrap;
+				font-size: 0px;
+			}
+			.item {
+                width: 100px;
+                height: 100px;
+                display: inline-block;
+                background: green;
+                position: relative;
+			}
+			.item:nth-child(2n) {
+				background: red;
+			}
+			.item p{
+                width: 50px;
+                height: 20px;
+                text-align: center;
+                font-size: 12px;
+                color: white;
+                background: blue;
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%)
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="main">
+			<div class="con">
+				<div class="item">
+					<p>快点</p>
+				</div>
+				<div class="item">
+					<p>快点</p>
+				</div>
+				<div class="item">
+					<p>快点</p>
+				</div>
+				<div class="item">
+					<p>快点</p>
+				</div>
+				<div class="item">
+					<p>快点</p>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
+
