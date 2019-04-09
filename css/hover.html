@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>hover me</title>
+    <style>
+    .lineThrough {
+        position: relative;
+        display: block;
+        cursor: pointer;
+        width: 75px;
+    }
+
+    .lineThrough:before, .lineThrough:after {
+        content: '';
+        position: absolute;
+        width: 0%;
+        height: 2px;
+        top: 50%;
+        background: #fff;
+    }
+    .lineThrough:before {
+        left: -2.5px;
+    }
+    .lineThrough:after {
+        right: 2.5px;
+        background: #5778F3;
+        transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    .lineThrough:hover:before {
+        width: 100%;
+        background: #5778F3;
+        transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+        
+    }
+
+    .lineThrough:hover:after {
+        width: 100%;
+        background: transparent;
+        transition: 0s;
+    }
+    /* 
+    .lineThrough::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        transform: scaleX(0);
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #5878F3;
+        transform-origin: bottom right;
+        transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    .lineThrough:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+    }
+    */
+
+    </style>
+</head>
+<body>
+    <div class="lineThrough">
+        <div>Hover me</div>
+    </div>
+</body>
+</html>
