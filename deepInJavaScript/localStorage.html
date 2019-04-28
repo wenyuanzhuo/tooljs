@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>localStorage</title>
+</head>
+<body>
+    <script data-local="test1">
+            const init = (arg) => {
+                const ele = document.createElement('div')
+                ele.className = arg
+                ele.innerHTML = '1111'
+                document.body.appendChild(ele)
+                const content = document.querySelector(`.${arg}`).outerHTML
+                localStorage.setItem(arg, content)
+            }
+            init('test1')
+            const read = (attrid) => {
+                const content = localStorage.getItem(attrid)
+                document.querySelector(`.${attrid}`).outerHTML = content;
+                console.log(content)
+            }
+            read('test1')
+    </script>
+</body>
+</html>
