@@ -74,8 +74,9 @@
         transform-origin: center;
         animation: rotate-loader 2s linear infinite alternate;
     }
-
-    .cloudy > div {
+    .cloudy {
+        position: relative;
+        z-index: 9;
         display: inline-block;
         background: #60768D;
         border-radius: 50%;
@@ -86,7 +87,52 @@
             0.5rem -0.5rem #60768D ,
             0.8rem 0.2rem #60768D, 
             1.5rem 0.2rem 0 -0.2rem #60768D ;
+        animation: cloudy-loading 1s infinite alternate;
     }
+    @keyframes cloudy-loading  {
+        100% {
+            opacity: 0.5;
+        };
+    }
+    @keyframes rain-loading {
+        0% {
+            opacity: 0;
+            transform: translateY(0);
+        }
+        50% {
+            opacity: 1;
+            transform: translateY(4px);
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+    }
+    .rain {
+        z-index: 1;
+        position: absolute;
+        width: 0.2em;
+        height: 0.7em;
+        background-color: #48A7F4;
+        border-radius: 50%;
+        opacity: 0;
+        animation: rain-loading 2s ease-in infinite forwards;
+    }
+    .rainFirst {
+        top: 1em;
+        left: 0.2em;
+    }
+    .rainSecond {
+        top: 1em;
+        left: 1em;
+        animation-delay: 0.4s;
+    }
+    .rainThree {
+        top: 1em;
+        left: 1.8em;
+        animation-delay: 0.8s;
+    }
+
     </style>
 </head>
 <body>
@@ -96,8 +142,12 @@
     <div class="shadowLoader">
         <div></div>
     </div>
-    <div class="cloudy">
-        <div></div>
+    <div class="cloudyWrapper">
+        <div class="cloudy">
+            <div class="rain rainFirst"></div>
+            <div class="rain rainSecond"></div>
+            <div class="rain rainThree"></div>
+        </div>
     </div>
 </body>
 </html>
