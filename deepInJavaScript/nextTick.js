@@ -26,7 +26,7 @@ var nextTick = (function () {
         }
       }
     })
-    console.log('-----')
+
     if (!pending) {
       pending = true
       timerFunc()
