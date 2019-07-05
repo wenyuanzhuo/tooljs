@@ -20,7 +20,7 @@ new Promise(function (resolve) {//first macrotask
     console.log(5);
     new Promise(function(resolve) {
         console.log(13)
-        // resolve()
+        resolve()
     }).then(function() {
         console.log(12)
     })

@@ -80,8 +80,26 @@ function doSomething() {
     resolve(42)
   });
 }
-doSomething().then((res) => {
-  return Promise.resolve(res).then((res) => res + 1)
+// doSomething().then((res) => {
+//   return Promise.resolve(res).then((res) => res + 1)
+// })
+// .then(res => console.log(res))
+// .catch(err => console.log(err))
+
+function p(fn) {
+  let value
+  this.then(() => {
+    // return promise
+    return new p((resolve) => {
+
+    })
+  })
+  function resolve(newValue) {
+    console.log(newValue)
+    value = newValue
+  }
+  fn(resolve)
+}
+p((resolve) => {
+  resolve(111)
 })
-.then(res => console.log(res))
-.catch(err => console.log(err))
