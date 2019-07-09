@@ -1,10 +1,10 @@
 import * as React from 'react';
 import './App.css';
-
+import Hello, { NameEnum } from './components/Hello'
 import logo from './logo.svg';
 
 class App extends React.Component {
-  public render() {
+  render() {
     return (
       <div className="App">
         <header className="App-header">
@@ -14,6 +14,7 @@ class App extends React.Component {
         <p className="App-intro">
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <Hello name={NameEnum.Guuka} enthusiasmLevel={10}/>
       </div>
     );
   }
