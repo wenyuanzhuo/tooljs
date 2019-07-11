@@ -8,7 +8,7 @@ configure({
   adapter: new Adapter(),
 })
 describe('Hello test', () => {
-  const name = NameEnum.Guuka
+  const name: string = NameEnum.Guuka
 
   it('create Hello Component', () => {  
     const div = document.createElement('div');
