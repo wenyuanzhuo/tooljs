@@ -12,6 +12,7 @@
     "interface-name": false,
     "member-access": [true, "no-public"],
     "ordered-imports": false,
-    "no-console": false
+    "no-console": false,
+    "callable-types": false
   }
 }
