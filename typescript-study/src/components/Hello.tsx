@@ -35,7 +35,7 @@ function Hello ({name, enthusiasmLevel = 1}: Props) {
       <h1>我是{name}</h1>
       <span>{getExclamationMarks(enthusiasmLevel)}</span>
       <h1>{getDefaultObj({x: 10})}</h1>
-      <h2>{identity<string>("我是泛型函数")}</h2>
+      {/* <h2>{identity<string>("我是泛型函数")}</h2> */}
     </div>
   )
 }
@@ -49,7 +49,9 @@ function error(message: string): never {
 function getDefaultObj(obj: DefaultObj) {
   return Object.keys(obj).join('')
 }
+export default Hello
 // 接口
+
 // 描述普通对象
 // interface SquareConfig {
 //   color?: string;
@@ -66,51 +68,158 @@ function getDefaultObj(obj: DefaultObj) {
 // 对于包含方法和内部状态的复杂对象字面量来讲，你可能需要使用这些技巧，但是大部额外属性检查错误是真正的bug。
 
 // 描述函数对象
-interface SearchFunc {
-  (source: string, subString: string): boolean;
-}
+// interface SearchFunc {
+//   (source: string, subString: string): boolean;
+// }
+// let mySearch: SearchFunc;
+// mySearch = (src: string, subS: string): boolean => {
+//   const result = src.search(subS)
+//   console.log(result)
+//   return result > -1
+// }
+// mySearch('www.123.com', '123')
 
-// -----------------
+// 可索引类型
+// interface StringArray {
+//   [index: number]: string;
+// }
+// let myArray: StringArray
+// myArray = ['Bob', 'Fred']
+// const myString = myArray[0]
+// console.log(myString)
 
-let mySearch: SearchFunc;
-mySearch = (src: string, subS: string): boolean => {
-  const result = src.search(subS)
-  console.log(result)
-  return result > -1
-}
-mySearch('www.123.com', '123')
+// 类类型
+// interface ClockInterface {
+//   currentTime: Date;
+//   setTime(d: Date): any;
+// }
 
-// -------------
-interface MyInterface {
-  // This is call signature
-  // It is used inside object type, function expression, function declaration, etc...
-   (x:number, y:number): number; 
-}
+// class Clock implements ClockInterface {
+//   currentTime: Date;
+//   setTime(d: Date) {
+//     this.currentTime = d;
+//   }
+// constructor(h: number, m: number) { }
+// }
 
-const myOne : MyInterface = (x,y) => {
-  console.log(111)
-  return x + y
-};
-myOne(1, 2)
+// interface ClockConstructor {
+//   new (h: number, m: number): ClockInterface;
+// }
+
+// interface ClockInterface {
+//   tick(): any;
+// }
+
+// function createClock(ctor: ClockConstructor, h: number, m: number): ClockInterface {
+//   return new ctor(h, m)
+// }
+
+// class AnalogClock implements ClockInterface {
+//   constructor(hour: number, minute: number) {
+//   }
+//   tick() {
+//     console.log('analog clock')
+//   }
+// }
+// const myChild: AnalogClock = createClock(AnalogClock, 1, 2)
+// console.log(myChild)
+
+
+// class Control {
+//   private state: any;
+// }
+
+// interface SelectableControl extends Control {
+//   select(): void;
+// }
+// class TextBox extends Control {
+//   select() { }
+// }
+// class Button extends Control implements SelectableControl {
+//   select() { }
+// }
+// // 错误：“Image”类型缺少“state”属性。
+// class Image implements SelectableControl {
+//   select() { }
+// }
+// --------------------------------------------------------------
+
+
+
+
+
+
+
+
 // 泛型
-function identity<T>(arg: T): T {
-  return arg
-}
-function loggingIdentity<T>(arg: T[]): T[] {
-  console.log(arg.length)
-  return arg
-}
-loggingIdentity<string>(["我是泛型T[] Array<T>"])
-const myIdentity: <T>(arg: T) => T = identity
-// let myIdentity: {<T>(arg: T): T} = identity
+// function identity<T>(arg: T): T {
+//   return arg
+// }
+// function loggingIdentity<T>(arg: T[]): T[] {
+//   console.log(arg.length)
+//   return arg
+// }
+// loggingIdentity<string>(["我是泛型T[] Array<T>"])
+// // const myIdentity: <T>(arg: T) => T = identity
+// // let myIdentity: {<T>(arg: T): T} = identity
 // interface GenericIdentityFn<T> {
 //   (arg: T): T;
 // }
-// let myIdentity: GenericIdentityFn<string> = identity
+// const myIdentity: GenericIdentityFn<string> = identity
+// console.log(myIdentity('111'))
 
+// 泛型类
+// class GenericNumber<T> {
+//   zeroNumber: T;
+//   add: {(x: T, y: T): T}
+// }
 
-console.log(myIdentity('111'))
+// const myGenericNumber = new GenericNumber<number>()
+// myGenericNumber.zeroNumber = 1
+// myGenericNumber.add = (x, y) => {
+//   return x + y
+// }
+// console.log(myGenericNumber.add(1,2))
 
+// 泛型约束
+// interface Lengthwise {
+//   length: number
+// }
+// function identity<T extends Lengthwise>(arg: T): T {
+//   console.log(arg.length)
+//   return arg
+// }
+// function a(b: number) {
+//   identity(arguments)
+// }
+// a(23123)
+// 泛型中使用类类型
+// function createFunc<T>(arg: {new (): T}): T {
+//   return new arg()
+// }
 
+// class BeeKeeper {
+//   hasMask: boolean;
+// }
 
-export default Hello
+// class ZooKeeper {
+//   nametag: string;
+// }
+
+// class Animal {
+//   numLegs: number;
+// }
+
+// class Bee extends Animal {
+//   keeper: BeeKeeper;
+// }
+
+// class Lion extends Bee {
+//   keeper: BeeKeeper;
+// }
+
+// function createInstance<A extends Animal>(c: new () => A): A {
+//   return new c();
+// }
+// createInstance(Lion).keeper.hasMask
+// createInstance(Bee).keeper.hasMask
