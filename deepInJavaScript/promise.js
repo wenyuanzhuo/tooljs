@@ -75,31 +75,45 @@
 // })
 
 
-function doSomething() {
-  return  new Promise(function (resolve) {
+async function doSomething() {
+  return new Promise(function (resolve) {
     resolve(42)
   });
 }
-// doSomething().then((res) => {
-//   return Promise.resolve(res).then((res) => res + 1)
-// })
-// .then(res => console.log(res))
-// .catch(err => console.log(err))
-
-function p(fn) {
-  let value
-  this.then(() => {
-    // return promise
-    return new p((resolve) => {
-
+async function p () {
+  await Promise.all([doSomething()]).then((result) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+          console.log(2, result)
+          resolve({
+              name: "第2个传递的值"
+          })
+      }, 3000)
     })
   })
-  function resolve(newValue) {
-    console.log(newValue)
-    value = newValue
-  }
-  fn(resolve)
+  .then(res => {
+    console.log(2222, res)
+  })
+  .catch(err => console.log(err))
+  setTimeout(() => {
+    console.log(3333)
+  }, 0)
 }
-p((resolve) => {
-  resolve(111)
-})
+p()
+// function p(fn) {
+//   let value
+//   this.then(() => {
+//     // return promise
+//     return new p((resolve) => {
+
+//     })
+//   })
+//   function resolve(newValue) {
+//     console.log(newValue)
+//     value = newValue
+//   }
+//   fn(resolve)
+// }
+// p((resolve) => {
+//   resolve(111)
+// })
