@@ -15,17 +15,6 @@ export interface DefaultObj {
   readonly x?: number; // 只读
 }
 
-// interface Named {
-//   name: string;
-// }
-
-// class Person {
-//   name: string;
-// }
-
-// let p: Named;
-// // OK, because of structural typing
-// p = new Person();
 function Hello ({name, enthusiasmLevel = 1}: Props) {
   if (enthusiasmLevel <= 0) {
     error('something failed')
@@ -171,12 +160,13 @@ export default Hello
 // 泛型类
 // class GenericNumber<T> {
 //   zeroNumber: T;
-//   add: {(x: T, y: T): T}
+//   add: {(x: T, y: T): T};
+//   del: (x: T, y: T) => T;
 // }
 
 // const myGenericNumber = new GenericNumber<number>()
 // myGenericNumber.zeroNumber = 1
-// myGenericNumber.add = (x, y) => {
+// myGenericNumber.add = (x, y) => {å
 //   return x + y
 // }
 // console.log(myGenericNumber.add(1,2))
@@ -185,14 +175,17 @@ export default Hello
 // interface Lengthwise {
 //   length: number
 // }
+// class LengthClass {
+//   length: number
+// }
 // function identity<T extends Lengthwise>(arg: T): T {
 //   console.log(arg.length)
 //   return arg
 // }
-// function a(b: number) {
-//   identity(arguments)
+// function a(b: number[]) {
+//   identity(b)
 // }
-// a(23123)
+// a([111, 22])
 // 泛型中使用类类型
 // function createFunc<T>(arg: {new (): T}): T {
 //   return new arg()
@@ -223,3 +216,26 @@ export default Hello
 // }
 // createInstance(Lion).keeper.hasMask
 // createInstance(Bee).keeper.hasMask
+
+
+// 类
+// class Animal {
+//   private name: string;
+//   constructor(theName: string) { this.name = theName; }
+// }
+
+// class Rhino extends Animal {
+//   constructor() { super("Rhino"); }
+// }
+
+// class Employee {
+//   private name: string;
+//   constructor(theName: string) { this.name = theName; }
+// }
+
+// let animal = new Animal("Goat");
+// let rhino = new Rhino();
+// let employee = new Employee("Bob");
+
+// animal = rhino;
+// animal = employee; // 错误: Animal 与 Employee 不兼容.
