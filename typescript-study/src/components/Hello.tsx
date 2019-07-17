@@ -221,11 +221,15 @@ export default Hello
 // 类
 // class Animal {
 //   private name: string;
-//   constructor(theName: string) { this.name = theName; }
+//   // readonly title: string; 放在构造函数参数里 作用---- 声明 同时赋值
+//   constructor(theName: string, readonly title: string) {
+//     this.name = theName;
+//     this.title = title;
+//   }
 // }
 
 // class Rhino extends Animal {
-//   constructor() { super("Rhino"); }
+//   constructor() { super('Rhino', 'Rhino'); }
 // }
 
 // class Employee {
@@ -233,9 +237,59 @@ export default Hello
 //   constructor(theName: string) { this.name = theName; }
 // }
 
-// let animal = new Animal("Goat");
+// let animal = new Animal("Goat", 'animal');
 // let rhino = new Rhino();
 // let employee = new Employee("Bob");
-
+// animal.title = 'xx' // 错误： title 只读
 // animal = rhino;
-// animal = employee; // 错误: Animal 与 Employee 不兼容.
+// animal = employee; // 错误: Animal 与 Employee 不兼容. private 不继承 protected可以继承 但是都不能被实例化访问
+
+// let passcode = '123456'
+// class Employee {
+//   private fullname: string = 'nick';
+
+//   get name(): string {
+//     return this.fullname + Employee.origin.x
+//   }
+//   set name(newName: string) {
+//     if (passcode === '123456') {
+//       this.fullname = newName
+//     } else {
+//       console.log("Error: Unauthorized update of employee!");
+//     }
+//   }
+// }
+// passcode = '111111'
+// const employee = new Employee()
+// employee.name = 'aaron' + employee.name
+// 抽象类
+// abstract class Department {
+//   constructor(public name: string) {}
+//   printName(): void {
+//   }
+//   abstract printMeeting(): void // 必须在派生类中实现
+// }
+// class AccountingDepartment extends Department {
+//   constructor() {
+//     super('aaron')
+//   }
+//   printMeeting(): void {
+//     console.log('The Accounting Department meets each Monday at 10am.')
+//   }
+// }
+// let department: Department;
+// department = new Department(); // 错误: 不能创建一个抽象类的实例
+// department = new AccountingDepartment(); // 允许对一个抽象子类进行实例化和赋值
+// department.printMeeting()
+
+// class Greeter {
+//   static standardGreeting = 'Aaron'; // 静态属性 只存在类本身  不存在实例上
+//   greet() {
+//     return Greeter.standardGreeting
+//   }
+// }
+
+// const greeterMaker: typeof Greeter = Greeter; // typeof Greeter 类的类型
+// greeterMaker.standardGreeting = 'nick'
+// const greeter: Greeter = new greeterMaker()
+// console.log(greeter.greet()) // nick
