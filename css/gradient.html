@@ -7,8 +7,9 @@
     <title>渐变动画</title>
     <style>
         .container {
-            width: 100%;
-            height: 100%;
+            width: 100px;
+            height: 30px;
+            border-radius: 15px;
             position: relative;
             overflow: hidden;
         }
@@ -34,7 +35,7 @@
             z-index: 10;
             opacity: 0.4;
             transform: rotate(45deg);
-            background: linear-gradient(#fff 0px,#fff 15px);
+            background: linear-gradient(#ccc 0px,#ccc 15px);
             animation: move 2s ease-in infinite; 
         }
         @keyframes move {
@@ -42,7 +43,7 @@
                 left: -10px;
             }
             100% {
-                left: 100%;
+                left: 100px;
             }
         }
     </style>

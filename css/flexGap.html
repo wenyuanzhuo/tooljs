@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>flex gap</title>
+    <style>
+    .upper {
+        margin:30px;
+        display:flex;
+        flex-direction:row;
+        width:300px;
+        height:80px;
+        border:1px red solid;
+    }
+    .upper > div {
+        flex:0 1 120px;
+        border:1px red solid;
+        text-align:center;
+
+        margin:5px;  /* and that, will result in a 10px gap */
+    }
+
+    .upper.mc {
+        flex-direction:column;flex-wrap:wrap;width:200px;height:200px;
+    }
+</style>
+</head>
+<body>
+    <div class="upper">
+        <div>aaa<br/>aaa</div>
+        <div>aaa</div>
+      </div>
+      
+      <div class="upper mc">
+        <div>aaa<br/>aaa</div>
+        <div>aaa</div>
+        <div>aaa<br/>aaa</div>
+        <!-- <div>aaa<br/>aaa<br/>aaa</div>
+        <div>aaa</div>
+        <div>aaa</div> -->
+      </div>
+    </div>
+    </body>
+</body>
+</html>

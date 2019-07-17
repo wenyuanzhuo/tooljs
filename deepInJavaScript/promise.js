@@ -22,11 +22,13 @@ function promise(fn) {
   var value
   var state = 'pending'
   var deferred = null
-  this.then = function(onResolved) {
-    return new promise(function (resolve) {
+  this.then = function(onResolved, onRejected) {
+    return new promise(function (resolve, reject) {
       handle({
         onResolved: onResolved,
-        resolve: resolve
+        onRejected: onRejected,
+        resolve: resolve,
+        reject: reject
       })
     })
     
@@ -41,18 +43,23 @@ function promise(fn) {
       handler.resolve(value)
       return
     }
-    var newValue = handler.onResolved(value) //上一个then的返回值作为参数 这就是为什么一定要返回
-    handler.resolve(newValue)
+    if (state === 'resolved') {
+      var newValue = handler.onResolved(value) //上一个then的返回值作为参数 这就是为什么一定要返回
+      handler.resolve(newValue) 
+    }
+    if (state === 'rejected') {
+      var newValue = handler.onRejected(value)
+      handler.reject(newValue) 
+    }
   }
   function resolve(newValue) { // 成功走的流程 state -> resolve
     if (newValue && typeof newValue.then === 'function') {// newValue是个promise走的逻辑
       console.log(222)
-      newValue.then(resolve)
+      newValue.then(resolve, reject)
     }
     value = newValue
-    console.log('11', newValue)
     state = 'resolved'
-    if(deferred) {
+    if(deferred) { // pending reslove执行 往往是个队列需要一个一个shift
       handle(deferred)
     }
   }
@@ -64,7 +71,7 @@ function promise(fn) {
 //   });
 // }
 
-// doSomething().then(function(result) {
+// doSomething().then().then(function(result) {
 //   console.log('first result', result);
 //   return 88;
 // }).then(function(res) {
@@ -85,17 +92,21 @@ function promiseTypeOf(val) {
 function myTestIsPromiseThenablejob() {
   return new Promise(function (resolve, reject) {
     const promise = Promise.resolve(10)
+    const myPromiseReject = Promise.reject('reject')
     isPromiseThenablejob(promise)
     promiseTypeOf(promise)
-    resolve({})
-    reject({name: '11'})  // 2.3.3.3.3 
+    resolve(myPromiseReject)
+    // reject({name: '11'})  // 2.3.3.3.3 
   });
 }
 myTestIsPromiseThenablejob()
   .then((res) => {
-    console.log(res)
+    console.log('-resolve-',res)
   })
-  .catch(err => console.log(err))
+  .catch(err => console.log('-reject-', err))
+
+
+
 async function doSomething() {
   return new Promise(function (resolve, reject) {
     resolve(42)
