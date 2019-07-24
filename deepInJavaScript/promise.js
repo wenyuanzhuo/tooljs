@@ -99,11 +99,11 @@ function myTestIsPromiseThenablejob() {
     // reject({name: '11'})  // 2.3.3.3.3 
   });
 }
-myTestIsPromiseThenablejob()
-  .then((res) => {
-    console.log('-resolve-',res)
-  })
-  .catch(err => console.log('-reject-', err))
+// myTestIsPromiseThenablejob()
+//   .then((res) => {
+//     console.log('-resolve-',res)
+//   })
+//   .catch(err => console.log('-reject-', err))
 
 
 
@@ -113,7 +113,9 @@ async function doSomething() {
   });
 }
 async function p () {
-  await Promise.all([doSomething()]).then((result) => {
+  const data = await Promise.all([doSomething()])
+  console.log('111', await Promise.all([doSomething()]))
+  return doSomething().then((result) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
           resolve({
@@ -123,15 +125,18 @@ async function p () {
     })
   })
   .then(res => {
-    console.log(2222, res)
+    throw Error()
   })
-  .catch(err => console.log(err))
-  setTimeout(() => {
-    console.log(3333)
-  }, 0)
+  .then(err => console.log(err))
+  .catch(err => {
+    return Promise.resolve(1)
+  })
 }
-// p()
-
+async function b() {
+  const a = await p()
+  console.log(a)
+}
+b()
 
 
 
@@ -160,3 +165,5 @@ async function p () {
 // p((resolve) => {
 //   resolve(111)
 // })
+
+
