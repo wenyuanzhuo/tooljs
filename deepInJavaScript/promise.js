@@ -114,7 +114,14 @@ async function doSomething() {
 }
 async function p () {
   const data = await Promise.all([doSomething()])
-  console.log('111', await Promise.all([doSomething()]))
+  const res =  await Promise.all([doSomething()]).then(() => {
+    return new Promise((resolve) => {
+      setTimeout(()=> {
+        resolve(22)
+      }, 2000)
+    })
+  })
+  console.log('111', res)
   return doSomething().then((result) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -123,6 +130,9 @@ async function p () {
           })
       }, 3000)
     })
+  })
+  .then((res) => {
+    console.log(22, res)
   })
   .then(res => {
     throw Error()
