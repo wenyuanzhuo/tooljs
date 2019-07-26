@@ -114,21 +114,21 @@ async function doSomething() {
 }
 async function p () {
   const data = await Promise.all([doSomething()])
-  const res =  await Promise.all([doSomething()]).then(() => {
+  await Promise.all([doSomething()]).then(() => {
     return new Promise((resolve) => {
       setTimeout(()=> {
         resolve(22)
       }, 2000)
     })
   })
-  console.log('111', res)
+  // console.log('111', res)
   return doSomething().then((result) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
           resolve({
               name: "第2个传递的值"
           })
-      }, 3000)
+      }, 0)
     })
   })
   .then((res) => {
