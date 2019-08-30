@@ -16,6 +16,7 @@ const obj = {
   'orders-friend': 10, // 1
   'l-page': 6, // 1
   '-lack': 3, // 1
+  'sign-share': 20,
 }
 const differenceBy = (a, b, fn) => {
   const s = new Set(b.map(fn))

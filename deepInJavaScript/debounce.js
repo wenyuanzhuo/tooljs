@@ -39,16 +39,27 @@ function jieliu3(func, wait) {
     now = +new Date()
     _this = this
     args = arguments
-    if (now - timestamp >= wait) {
-      if(timer) {
+    remain = wait - (now - timestamp)
+    if (remain <= 0) { // 第一次立即执行
+      timestamp = now
+      func.apply(_this, args)
+      if (timer) {
         clearTimeout(timer)
         timer = null
       }
-      timestamp = now
-      func.apply(_this, args)
-    } else if (!timer) {//立刻执行
+    } else if (!timer) {
       timer = setTimeout(later,wait)
     }
+    // if (now - timestamp >= wait) {
+    //   if(timer) {
+    //     clearTimeout(timer)
+    //     timer = null
+    //   }
+    //   timestamp = now
+    //   func.apply(_this, args)
+    // } else if (!timer) {//立刻执行
+    //   timer = setTimeout(later,wait)
+    // }
   }
 }
 

@@ -1,26 +1,10 @@
-const arr = {
-  shelf: {
-    '11': {},
-    '22': {},
-    '33': {}
-  },
-  shoppe: [{
-    id: 8,
-    name: 'aaron',
-    shelfId: '11'
-  }, {
-    id: 9,
-    name: 'aaron',
-    shelfId: '22'
-  }, {
-    id: 19,
-    name: 'aaron',
-    shelfId: '33'
-  }]
+var myObj = { 
+  name: '极客时间',
+  showThis: function() {
+    console.log(this)
+  }
 }
-const isFresh = true
-const skey = false
-const res = arr.shoppe.filter((item) => {
-  return item && arr.shelf[item.shelfId] && (item.id !== 8 || skey)
-})
-console.log(res)
+var foo = function() {
+  myObj.showThis()
+}
+foo()

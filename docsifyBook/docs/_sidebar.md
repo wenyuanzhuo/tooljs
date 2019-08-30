@@ -1,8 +1,8 @@
 * 产品反思
 > [首页](/home)
 
-* 进阶
-> [导航](/guide)
+* js
+> [javaScript](/guide)
 
 * 感悟
 > [时间](/thoughts)
@@ -11,4 +11,4 @@
 > [时间](/chrome)
 
 * react
-> [时间](/react)
+> [前端](/react)
