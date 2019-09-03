@@ -51,3 +51,6 @@ react
   subscription.onStateChange = checkForUpdates
   subscription.trySubscribe()
   ```
+  ##react16.6性能优化
+  =============================
+  1. memo()缓存策略

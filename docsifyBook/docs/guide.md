@@ -24,3 +24,15 @@ ES6
     }
 
     ```
+
+  ## this
+  1.memberExpression 属性访问表达式 ---  ()的左边 ref = memberExpression
+  2.reference  ---  base Value 属性所在对象  name propertyNameString
+  3.IsPropertyReference(ref) 是 true --- 当 ref 的 base Value 是对象而非 EnvironmentRecord  
+  ```
+    2.1 如果 ref 是 Reference，并且 IsPropertyReference(ref) 是 true, 那么 this 的值为 GetBase(ref)
+
+    2.2 如果 ref 是 Reference，并且 base value 值是 Environment Record, 那么this的值为 ImplicitThisValue(ref)
+
+    2.3 如果 ref 不是 Reference，那么 this 的值为 undefined
+  ```
