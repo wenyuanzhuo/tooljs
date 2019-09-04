@@ -15,6 +15,7 @@
     "no-console": false,
     "callable-types": false,
     "max-classes-per-file": [true, 10],
-    "no-empty": false
+    "no-empty": false,
+    "jsx-no-lambda": false
   }
 }

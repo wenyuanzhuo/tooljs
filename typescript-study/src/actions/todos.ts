@@ -1,8 +1,7 @@
 import { Dispatch } from 'redux';
 import axios from 'axios';
-import { ActionTypes } from './actionTypes';
+import { ActionTypes } from './actionsTypes';
 import { Todo } from '../reducers/index';
-
 export interface FetchTodosAction {
   type: ActionTypes.fetchTodos;
   payload: Todo[];
