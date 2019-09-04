@@ -12,7 +12,8 @@ export const App: React.FC = () => {
   // create some local state with useState that will tell us if our fetch result is still loading
   const [fetching, setFetching] = useState<boolean>(false);
   const todos = useSelector((state: StoreState) => state.todos);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
+  const useThunkDispatch = (thunk: any) => dispatch(thunk)
   // redux hook that is called whenever todos.length is changed
   useEffect(() => {
     if (todos.length) {
@@ -32,7 +33,8 @@ export const App: React.FC = () => {
     <div>
       <button
         onClick={() => {
-          dispatch(fetchTodos());
+          useThunkDispatch(fetchTodos())
+          // dispatch(fetchTodos());
           handleSetFetching(fetching, setFetching);
         }}>
         fetch data !
