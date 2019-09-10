@@ -63,3 +63,44 @@ const b = new a()
 // console.log(Object.getPrototypeOf(ColorPoint) === ColorPoint.prototype.__proto__.constructor) // true
 // console.log(ColorPoint.prototype.__proto__.constructor === Point) // true
 
+var A = function () {
+  this.x = x
+}
+A.prototype.getName = function () {}
+
+class A {
+  constructor (x) {
+    this.x = x
+  }
+  getName = function () {}
+}
+
+// 伪代码
+var A = function () {
+  function A (x) {
+    this.x = x
+  }
+  _createClass(A, [{
+    key: 'getName',
+    value: function getName () {
+      return this.x
+    }
+  }], [{}])
+  return A
+}
+var _createClass = (function () {
+  function defineProperties (target, props) {
+    for (let i = 0; i < props.length; i++) {
+      var descriptor = props[i]
+      // set descriptor's enumerable configurable writable
+      // get descriptor.key return protoFunc
+      Object.defineProperty(target, descriptor.key, Object.assign({}, descriptor, {
+        get: descriptor.value
+      }))
+    }
+  }
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps)
+  }
+})()
+
