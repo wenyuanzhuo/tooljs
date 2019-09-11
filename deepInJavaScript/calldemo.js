@@ -9,9 +9,6 @@ var bar = function(name, firstname, age) {
   this.name = name
   this.firstname = firstname
   this.age = age
-  console.log(age)
-  console.log(name)
-  console.log(firstname)
   console.log(222, this)
 }
 // bar.call(obj, 'Aaron')
