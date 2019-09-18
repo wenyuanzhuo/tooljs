@@ -36,9 +36,9 @@ Function.prototype.bind2 = function (context) {
   fBound.prototype = new fNOP()
   return fBound
 }
-var res = bar.bind2(obj, 'Aaron', 'wen')//获取第二位开始的参数 
-var f = new res('18') //闭包执行环境 globa 闭包内this指向window   如果new res this指向 实例
-console.log(f)
+// var res = bar.bind2(obj, 'Aaron', 'wen')//获取第二位开始的参数 
+// var f = new res('18') //闭包执行环境 globa 闭包内this指向window   如果new res this指向 实例
+// console.log(f)
 /*
   var obj1 = {
     value: 2,
@@ -76,16 +76,28 @@ function newNext () {
 }
 // var res = newNext(Otaku, 'Aaron')
 // var res = new Otaku('Aaron')
-// function o() {
-//   this.sex = 'nan'
-// }
-// o.prototype.name = function() {
-//   console.log(11111)
-// }
-// function create1 (o) {//复制对象 不能访问o原型上的属性
-//   function f() {}
-//   f.prototype = o
-//   return new f()
-// }
-// var c = create1(o)
- 
+
+function create1 (o) {
+  function F() {}
+  F.prototype = o;
+  return new F();
+}
+function Parent (name) {
+  this.names = ['kevin', 'daisy', name];
+  this.colors = ['red']
+}
+Parent.prototype.getName = function () { console.log(this.name) }
+function Child (name) {
+  Parent.call(this, name)
+  this.name = name
+}
+function myExtends (child, parent) {
+  var prototype = create1(parent.prototype)
+  prototype.constructor = child
+  child.prototype = prototype
+}
+// var b = new Child('parent')
+// b.names.push('parent')
+myExtends(Child, Parent)
+var a = new Child('child')
+console.log(a)
