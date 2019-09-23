@@ -93,4 +93,8 @@ ES6
   then方法的作用
   - 1.将then(fn)中的回调执行的返回值 赋值给resolve的参数 (也就是下一跳的参数)
   - 2.通过在then执行handle函数 通过state 判断需要执行的行为 (由此也知道状态改变了就不会再变的原因)
+
+  ## Genertor 生成器
+  - <strong>协程</strong> —— async await
+
   

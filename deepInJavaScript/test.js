@@ -1,10 +1,20 @@
-var myObj = { 
-  name: '极客时间',
-  showThis: function() {
-    console.log(this)
-  }
+async function foo() {
+  console.log('foo') // 3
 }
-var foo = function() {
-  myObj.showThis()
+async function bar() {
+  console.log('bar start') // 2
+  await foo()
+  console.log('bar end')  // 6
 }
-foo()
+console.log('script start') // 1
+setTimeout(function () {
+  console.log('setTimeout') // 8
+}, 0)
+bar();
+new Promise(function (resolve) {
+  console.log('promise executor') // 4
+  resolve();
+}).then(function () {
+  console.log('promise then')  // 7
+})
+console.log('script end') // 5
