@@ -31,3 +31,8 @@ io.disconnect() // 关闭观察器
 ```
 
 总结 css应该放在heard和dom并行加载，js应该放置body底部最后加载。如果是不必要的js应当defer延迟加载，非首页js应该利用前端框架模块化 动态加载
+
+3. domInteractive domContentLoaded domComplete
+> - domInteractive 表示完成全部 HTML 的解析并且 DOM 构建完毕， （重要的性能指标——构建完说明可能阻塞dom解析与dom树构建过程结束）
+> - domContentLoaded 表示 DOM 与 CSSOM 皆已准备就绪， （defer 脚本执行） -> 准备渲染  jquery的ready方法，其实监听的就是 DOMContentLoaded 事件  
+> - domComplete 表示所有的处理都已完成并且所有的附属资源都已经下载完毕(页面上所有的资源（图片，音频，视频等）被加载以后才会触发load事件)

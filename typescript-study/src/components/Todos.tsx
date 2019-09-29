@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTodos, deleteTodo } from '../actions';
 import { Todo, StoreState } from '../reducers';
+// import { todosReducer } from '../reducers/todos';
 
 const handleSetFetching = (fetching: boolean, setFetching: React.Dispatch<React.SetStateAction<boolean>>) => {
   if (!fetching) {
@@ -20,6 +21,11 @@ export const App: React.FC = () => {
       setFetching(false);
     }
   }, [todos.length]);
+  // TODO try use useReducer, result: dispatch params must be action rather then Promise
+  // const initialState: Todo[] = [];
+  // const [state, dispatch] = useReducer(todosReducer, initialState)
+
+
   // create an array of buttons that dispatch the deleteTodo action onClick
   const curTodos = todos.map((todo: Todo) => (
     <button
