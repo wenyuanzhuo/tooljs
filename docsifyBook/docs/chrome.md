@@ -102,4 +102,11 @@ will-change: transform;
 - will-change 浅析 // TODO
 
 
+-----------
+
+why 虚拟Dom ?
+
+操作dom导致 触发样式计算、布局、绘制、栅格化、合成等任务（重排）
+
+
 
