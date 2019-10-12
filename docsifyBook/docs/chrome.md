@@ -108,5 +108,20 @@ why 虚拟Dom ?
 
 操作dom导致 触发样式计算、布局、绘制、栅格化、合成等任务（重排）
 
+- react Fiber —— 
+```
+// 第1阶段 render/reconciliation
+  通过 window.requestIdleCallback() 方法 通知主线程在 空闲时执行低优先级任务（这里的低优先级任务 就是diff 任务)
 
+  componentWillMount
+  componentWillReceiveProps
+  shouldComponentUpdate
+  componentWillUpdate
 
+// 第2阶段 commit
+  完成vdom 到真实dom的更新 同步一次完成 不能暂停
+
+  componentDidMount
+  componentDidUpdate
+  componentWillUnmount
+```
