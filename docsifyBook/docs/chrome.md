@@ -109,19 +109,98 @@ why 虚拟Dom ?
 操作dom导致 触发样式计算、布局、绘制、栅格化、合成等任务（重排）
 
 - react Fiber —— 
+
 ```
+Fiber node structure
+{
+    stateNode: new ClickCounter,
+    type: ClickCounter,
+    alternate: null,
+    key: null,
+    updateQueue: null,
+    memoizedState: {count: 0},
+    pendingProps: {},
+    memoizedProps: {},
+    tag: 1,
+    effectTag: 0,
+    nextEffect: null
+}
 // 第1阶段 render/reconciliation
   通过 window.requestIdleCallback() 方法 通知主线程在 空闲时执行低优先级任务（这里的低优先级任务 就是diff 任务)
 
-  componentWillMount
-  componentWillReceiveProps
+  [UNSAFE_]componentWillMount
+  [UNSAFE_]componentWillReceiveProps
+  [UNSAFE_]componentWillUpdate
+  getDerivedStateFromProps
   shouldComponentUpdate
-  componentWillUpdate
+  render
+```
+- nextUnitOfWork
+- performUnitOfWork
+```
+function performUnitOfWork(workInProgress) {
+  let next = beginWork(workInProgress);
+  if (next === null) {
+      next = completeUnitOfWork(workInProgress);
+  }
+  return next;
+}
 
-// 第2阶段 commit
+```
+- beginWork
+```
+function beginWork(workInProgress) {
+  console.log('work performed for ' + workInProgress.name);
+  return workInProgress.child;
+}
+```
+- completeUntiOfWork
+```
+function completeUnitOfWork(workInProgress) {
+  在完成当前fiber的工作之后，它将检查是否有兄弟节点
+  如果找到，React退出函数并返回指向同级的指针
+  它将被分配给nextUnitOfWork变量，React将执行从这个兄弟节点开始的分支的工作
+  重要的是要理解，此时React只完成了前面的兄弟姐妹的工作
+
+  while (true) {
+    let returnFiber = workInProgress.return;
+    let siblingFiber = workInProgress.sibling;
+
+    nextUnitOfWork = completeWork(workInProgress);
+
+    if (siblingFiber !== null) {
+        // If there is a sibling, return it
+        // to perform work for this sibling
+        return siblingFiber;
+    } else if (returnFiber !== null) {
+        // If there's no more work in this returnFiber,
+        // continue the loop to complete the parent.
+        workInProgress = returnFiber;
+        continue;
+    } else {
+        // We've reached the root.
+        return null;
+    }
+  }
+}
+```
+- completeWork
+```
+function completeWork(workInProgress) {
+  console.log('work completed for ' + workInProgress.name);
+  return null;
+}
+```
+--------------
+// 第2阶段 commit 同步
   完成vdom 到真实dom的更新 同步一次完成 不能暂停
 
+  getSnapshotBeforeUpdate
   componentDidMount
   componentDidUpdate
   componentWillUnmount
-```
+
+两颗tree 一个effect list
+- 一棵tree 是当前屏幕状态的树
+- 一棵是这次渲染 render phase阶段构建的side-effect树（fiber节点 单链表树结构）
+- effect list（commit需要迭代的节点集合-diff 节点）render phase阶段运行过的结果
