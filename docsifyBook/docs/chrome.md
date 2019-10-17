@@ -160,7 +160,7 @@ function completeUnitOfWork(workInProgress) {
   在完成当前fiber的工作之后，它将检查是否有兄弟节点
   如果找到，React退出函数并返回指向同级的指针
   它将被分配给nextUnitOfWork变量，React将执行从这个兄弟节点开始的分支的工作
-  重要的是要理解，此时React只完成了前面的兄弟姐妹的工作
+  重要的是要理解，此时React只完成了前面的兄弟姐妹的工作（beginWork就是处理sibling节点，如果有子节点就返回该节点的子节点）
 
   while (true) {
     let returnFiber = workInProgress.return;
@@ -204,3 +204,15 @@ function completeWork(workInProgress) {
 - 一棵tree 是当前屏幕状态的树
 - 一棵是这次渲染 render phase阶段构建的side-effect树（fiber节点 单链表树结构）
 - effect list（commit需要迭代的节点集合-diff 节点）render phase阶段运行过的结果
+
+
+### http 演化
+
+ - http 0.9
+  > 请求很简单——无请求头请求体， 响应服务器同样没有，ASCII 字符流
+ - http 1.0
+  ```
+  支持多种
+  ```
+ - http 2.0
+ - http 3.0
