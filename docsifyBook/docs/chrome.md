@@ -263,8 +263,13 @@ function completeWork(workInProgress) {
     
     jsonp (兼容性很好，老版本ie也可以兼容)
 
-    websockets (不受同源策略影响)
+    websockets (不受同源策略影响) —— 全双工
 
   - 跨文档消息机制
 
     不同源之间的DOM通信 （window.postMessage - html5）
+
+### xss 攻击
+  - 存储型
+  - 反射型
+  - DOM型
