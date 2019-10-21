@@ -252,3 +252,19 @@ function completeWork(workInProgress) {
     >存在的问题 
     1.中间设备 对 UDP 的优化程度远远低于 TCP
     2.目前丢包率太高
+
+
+### 同源策略
+
+  - csp
+    
+    CSP 的核心思想是让服务器决定浏览器能够加载哪些资源，让服务器决定浏览器是否能够执行内联 JavaScript 代码
+  - cors （跨域资源共享-现代浏览器支持）
+    
+    jsonp (兼容性很好，老版本ie也可以兼容)
+
+    websockets (不受同源策略影响)
+
+  - 跨文档消息机制
+
+    不同源之间的DOM通信 （window.postMessage - html5）
