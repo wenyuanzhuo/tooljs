@@ -1,5 +1,7 @@
 
 
+
+
 // async function foo() {
 //   console.log('foo') // 3
 //   return new Promise((resolve) => {
@@ -56,4 +58,69 @@
 // }
 // foo({homePage: true})
 
+// function mySetPromiseTimeout () {
+//   return myPromise
+// }
 
+// mySetPromiseTimeout().then((res) => {
+//   setTimeout(() => {
+//     if (!res) {
+//       Promise.reject('timeout !!!')
+//     }
+//   }, 3000);
+
+//   return res
+// }).catch(err => {
+//   console.log(err)
+// })
+
+// async function a (time) {
+//   const res = mySetPromiseTimeout()
+//   return new Promise((resolve, reject) => {
+//     resolve(res)
+//     setTimeout(() => {
+//       reject('err')
+//     }, time);
+//   })
+// }
+// a(2000)
+
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve('a')
+//     }, 1000)
+//   })
+function a () {
+  return Promise.resolve('a')
+  // return new Promise((resolve) => {
+  //   setTimeout(() => {
+  //     resolve('a')
+  //   }, 2000)
+  // })
+}
+function a1 () {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve('a1')
+    }, 1000)
+  })
+}
+function b () {
+  return Promise.resolve('b')
+  // return new Promise((resolve) => {
+  //   setTimeout(() => {
+  //     resolve('b')
+  //   }, 1000)
+  // })
+}
+
+async function c() {
+  const a2 = await a().then(() => {
+    a1().then((resa1) => {
+      console.log(resa1)
+    })
+  })
+  b().then(resb => console.log(resb))
+  console.log(a2)
+}
+c()

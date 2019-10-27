@@ -273,3 +273,21 @@ function completeWork(workInProgress) {
   - 存储型
   - 反射型
   - DOM型
+
+    1.修改页面数据
+
+    2.传输过程页面劫持
+
+### CSRF 攻击
+  - 必要条件
+    1. 目标站点有CSRF漏洞
+
+    2. 用户需要登陆过目标站点，并保持登录态
+
+    3. 需要用户点击打开黑客站点
+
+  - 防御方案
+
+    1. http响应头 设置SameSite
+    2. 验证请求源 origin/referer
+    3. token机制（类似单点登录）
