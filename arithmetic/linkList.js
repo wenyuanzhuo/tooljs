@@ -14,16 +14,13 @@ class LinkList {
 
   findByValue (element) {
     let nextNode = this.head.next
-    // if (!nextNode) { // 抛去哨兵节点
-    //   return
-    // }
+
     while(nextNode && nextNode.element) {
       if (nextNode.element === element) {
         return nextNode
       }
       nextNode = nextNode.next
     }
-    return nextNode
   }
 
   findByIndex (element) {
@@ -44,9 +41,9 @@ class LinkList {
     }
     currentNode.next = new Node(element)
   }
-  insert (newElement, prevELement) {
-    // 找到 prevELement
-    const findNode = this.findByValue(prevELement)
+  insert (newElement, currentELement) {
+    // 找到 currentELement , newElement插到currentELement之后
+    const findNode = this.findByValue(currentELement)
     if (findNode) {
       const newElementNode = new Node(newElement)
       newElementNode.next = findNode.next
@@ -68,23 +65,37 @@ class LinkList {
     }
 
   }
-  showListElement () {
-    let currentNode = this.head
+  showListElement (revelList) {
+    let currentNode = revelList || this.head
+
     while(currentNode.next) {
       console.log(currentNode.element)
       currentNode = currentNode.next
     }
+  }
+
+  revel() {
+    let next = null
+    let pre = null
+    while(this.head) {
+      next = this.head.next
+      this.head.next = pre // 第一次将指针指向pre（哨兵）
+      pre = this.head // 把当前的指针 保存 作为反转的后的 next的指向
+      this.head = next
+    }
+    return pre
   }
 }
 
 const linkList = new LinkList()
 linkList.append('a')
 linkList.append('c')
-linkList.insert('d', 'c') // a c d
-linkList.insert('e', 'd') // a c d e 
-linkList.insert('f', 'e') // a c d e f
-linkList.remove('e') // a c d f
-linkList.remove('f') // a c d
-linkList.insert('g', 'e') // a c d
-linkList.insert('h', 'd') // a c d h
-linkList.showListElement()
+linkList.insert('d', 'a') // a c d
+// linkList.insert('e', 'd') // a c d e
+// linkList.insert('f', 'e') // a c d e f
+// linkList.remove('e') // a c d f
+// linkList.remove('f') // a c d
+// linkList.insert('g', 'e') // a c d
+// linkList.insert('h', 'd') // a c d h
+const revel = linkList.revel()
+linkList.showListElement(revel)
