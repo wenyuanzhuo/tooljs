@@ -23,7 +23,7 @@ class LinkList {
     }
   }
 
-  findByIndex (element) {
+  findPrev (element) {
     let currentElement = this.head
     while(currentElement.next && currentElement.next.element) {
       if (currentElement.next.element === element) {
@@ -33,6 +33,10 @@ class LinkList {
     }
     return currentElement
   } 
+
+  findByIndex (num) {
+
+  }
   append (element) {
     // 找到链尾 next = null
     let currentNode = this.head
@@ -58,7 +62,7 @@ class LinkList {
     if (findNode) {
       // 找到  prevELement
 
-      const findPrevELement = this.findByIndex(element)
+      const findPrevELement = this.findPrev(element)
       if (findPrevELement) {
         findPrevELement.next = findNode.next
       }
