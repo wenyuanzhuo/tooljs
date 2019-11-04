@@ -31,7 +31,7 @@ class LinkList {
       }
       currentElement = currentElement.next
     }
-    return currentElement
+    return currentElement ? currentElement : null
   } 
 
   findByIndex (num) {
