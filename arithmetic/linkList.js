@@ -83,8 +83,11 @@ class LinkList {
     let pre = null
     while(this.head) {
       next = this.head.next
-      this.head.next = pre // 第一次将指针指向pre（哨兵）
-      pre = this.head // 把当前的指针 保存 作为反转的后的 next的指向
+      // 反转后的 this.head.next = this.head 
+      this.head.next = pre
+      // 把当前的节点存起来 反转后 作为反转后的next 也就是上一句逻辑
+      pre = this.head
+      // 一步一步将this.head向后推
       this.head = next
     }
     return pre
