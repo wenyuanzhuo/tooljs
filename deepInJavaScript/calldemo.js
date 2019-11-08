@@ -9,8 +9,9 @@ var bar = function(name, firstname, age) {
   this.name = name
   this.firstname = firstname
   this.age = age
-  console.log(222, this)
+  console.log(222, this, this.value)
 }
+bar.prototype.friend = 'AYZ'
 // bar.call(obj, 'Aaron')
 Function.prototype.call3 = function(context) {
   console.log(this)
@@ -28,17 +29,22 @@ Function.prototype.bind2 = function (context) {
   var self = this //保存this bar
   var args = Array.prototype.slice.call(arguments, 1) //获取bind2的参数从第二位开始到最后
   var fNOP = function () {};
-  fNOP.prototype = this.prototype
   var fBound = function () {
+    console.log(this instanceof self)
+    console.log(this instanceof fNOP)
     var bindArg = Array.prototype.slice.call(arguments) //获取返回函数传入的参数
-    return self.apply(this instanceof fNOP ? this : context, args.concat(bindArg))
+    self.apply(this instanceof self ? this : context, args.concat(bindArg))
+    // self.apply(context, args.concat(bindArg))
   }
+  // fBound.prototype = this.prototype //原型链继承 fBound.prototype改变导致绑定函数原型也发生改变
+  fNOP.prototype = this.prototype // create函数继承 寄生继承？
   fBound.prototype = new fNOP()
   return fBound
 }
-// var res = bar.bind2(obj, 'Aaron', 'wen')//获取第二位开始的参数 
-// var f = new res('18') //闭包执行环境 globa 闭包内this指向window   如果new res this指向 实例
-// console.log(f)
+var res = bar.bind2(obj, 'Aaron', 'wen')//获取第二位开始的参数 
+// res('18')
+var f = res('18') //闭包执行环境 globa 闭包内this指向window   如果new res this指向 实例
+console.log(f)
 /*
   var obj1 = {
     value: 2,
@@ -71,6 +77,7 @@ function newNext () {
   var dim = [].shift.call(arguments) //Otake arguments[0]
   obj.__proto__ = dim.prototype //访问Otake原型上的属性
   var answer = dim.call(obj, ...arguments) //改变this 访问Otake上的属性
+  console.log(answer)
   return typeof answer === 'object' ? answer :obj
   // return obj
 }
@@ -98,6 +105,6 @@ function myExtends (child, parent) {
 }
 // var b = new Child('parent')
 // b.names.push('parent')
-myExtends(Child, Parent)
-var a = new Child('child')
-console.log(a)
+// myExtends(Child, Parent)
+// var a = new Child('child')
+// console.log(a)
