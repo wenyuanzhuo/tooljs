@@ -74,6 +74,46 @@ while (i < 8) {
     testArr.push(Math.floor(Math.random() * 1000))
     i++
 }
-console.log('unsort', testArr)
-quickSort(testArr, 0, testArr.length - 1);
-console.log('sort', testArr)
+// console.log('unsort', testArr)
+// quickSort(testArr, 0, testArr.length - 1);
+// console.log('sort', testArr)
+
+//---------------------------------------------------------------------
+
+function countSort (arr, n) {
+  let max = 0
+  for(let i = 0; i < n; i++) {
+    if(max < arr[i]) {
+      max = arr[i]
+    }
+  }
+  // 桶中元素大小相等
+
+  // 第一步 分桶 并且计算每个桶中数量
+  const cArr = Array(max + 1).fill(0)
+  arr.forEach(ele => {
+    cArr[ele]++
+  })
+  // 第二步 计算 桶中的最后元素 下标 + 1(加了一)
+  const cArrCount = cArr.reduce((res, curr, currIndex) => {
+    if (currIndex > 0) {
+      res[currIndex] = curr + res[currIndex - 1]
+    } else {
+      res[currIndex] = curr
+    }
+    return res
+  }, [...cArr])
+  // 第三步  创建个存下所有元素的数组（排序结果）
+  const rArr = Array(n).fill(0)
+
+  // 第四步 桶下标递减赋值
+  // 遍历 原数组 对应cArrCount桶的下标 (cArrCount[arr[i] ) 递减
+  for (let i = arr.length - 1; i >= 0; i--) {
+    cArrCount[arr[i]] = cArrCount[arr[i]] - 1
+    rArr[cArrCount[arr[i]]] = arr[i]
+    console.log(rArr)
+  }
+  return rArr
+}
+
+console.log(countSort([2, 5, 3, 0, 2, 3, 0, 3], 8))

@@ -116,8 +116,9 @@ function b () {
 
 async function c() {
   const a2 = await a().then(() => {
-    a1().then((resa1) => {
-      console.log(resa1)
+    return a1().then((resa1) => {
+      // console.log(resa1)
+      // return a1()
     })
   })
   b().then(resb => console.log(resb))
