@@ -116,4 +116,5 @@ function countSort (arr, n) {
   return rArr
 }
 
-console.log(countSort([2, 5, 3, 0, 2, 3, 0, 3], 8))
+// console.log(countSort([2, 5, 3, 0, 2, 3, 0, 3], 8))
+// -----------------------------------------------------------
