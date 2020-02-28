@@ -9,6 +9,7 @@ var bar = function(name, firstname, age) {
   this.name = name
   this.firstname = firstname
   this.age = age
+  console.log(this === obj)
   console.log(222, this, this.value)
 }
 bar.prototype.friend = 'AYZ'
@@ -24,21 +25,26 @@ Function.prototype.call3 = function(context) {
   delete context.fn  // .........3
 }
 //由此可见call/apply 并不是返回一个函数 和bind的不同
-// bar.call3(obj, 'Aaron', 'wen')
+bar.call3(obj, 'Aaron', 'wen')
 Function.prototype.bind2 = function (context) {
   var self = this //保存this bar
   var args = Array.prototype.slice.call(arguments, 1) //获取bind2的参数从第二位开始到最后
-  var fNOP = function () {};
+  // var fNOP = function () {};
   var fBound = function () {
-    console.log(this instanceof self)
-    console.log(this instanceof fNOP)
+    // console.log(this instanceof fNOP)
     var bindArg = Array.prototype.slice.call(arguments) //获取返回函数传入的参数
     self.apply(this instanceof self ? this : context, args.concat(bindArg))
     // self.apply(context, args.concat(bindArg))
   }
   // fBound.prototype = this.prototype //原型链继承 fBound.prototype改变导致绑定函数原型也发生改变
-  fNOP.prototype = this.prototype // create函数继承
-  fBound.prototype = new fNOP()
+  // fNOP.prototype = this.prototype // create函数继承
+  // fBound.prototype = new fNOP()
+  var create1 = function(prototype) {
+    var f = function() {}
+    f.prototype = prototype
+    return new f()
+  }
+  fBound.prototype = create1(this.prototype)
   return fBound
 }
 // var res = bar.bind2(obj, 'Aaron', 'wen')//获取第二位开始的参数 
@@ -158,10 +164,9 @@ Child.prototype.childGetNames = function () {
   console.log(11111)
 }
 var child1 = new Child();
-
-child1.names.push('yayu');
-child1.getName()
-child1.childGetNames()
+// child1.names.push('yayu');
+// child1.getName()
+// child1.childGetNames()
 
 // console.log(child1.names); // ["kevin", "daisy", "yayu"]
 
