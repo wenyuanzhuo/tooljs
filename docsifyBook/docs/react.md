@@ -51,6 +51,12 @@ react
   subscription.onStateChange = checkForUpdates
   subscription.trySubscribe()
   ```
-  react16.6性能优化
-  =============================
+  
+  ```
+  Thu Feb 27 2020 01:01:35 GMT+0800 (中国标准时间)
+       redux :  dispatch -> 通知reducer更新 -> 同时通知subscribe订阅者 执行订阅者的回调（这是在回调获取的肯定是更新过的store ps: 这就是一个emitter）
+  react-redux:  作用就是  给予组件dispatch的能力（更新store）+ 创建subscribe订阅者（获取更新的store更新组件状态）
+  ```
+  
+  ## react16.6性能优化
   1. memo()缓存策略
