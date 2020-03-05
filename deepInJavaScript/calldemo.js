@@ -25,12 +25,13 @@ Function.prototype.call3 = function(context) {
   delete context.fn  // .........3
 }
 //由此可见call/apply 并不是返回一个函数 和bind的不同
-bar.call3(obj, 'Aaron', 'wen')
+// bar.call3(obj, 'Aaron', 'wen')
 Function.prototype.bind2 = function (context) {
   var self = this //保存this bar
   var args = Array.prototype.slice.call(arguments, 1) //获取bind2的参数从第二位开始到最后
   // var fNOP = function () {};
   var fBound = function () {
+    console.log('=====', this, fBound.prototype)
     // console.log(this instanceof fNOP)
     var bindArg = Array.prototype.slice.call(arguments) //获取返回函数传入的参数
     self.apply(this instanceof self ? this : context, args.concat(bindArg))
@@ -47,9 +48,9 @@ Function.prototype.bind2 = function (context) {
   fBound.prototype = create1(this.prototype)
   return fBound
 }
-// var res = bar.bind2(obj, 'Aaron', 'wen')//获取第二位开始的参数 
+var res = bar.bind2(obj, 'Aaron', 'wen')//获取第二位开始的参数 
 // res('18')
-// var f = new res('18') //闭包执行环境 globa 闭包内this指向window   如果new res this指向 实例
+var f = new res('18') //闭包执行环境 globa 闭包内this指向window   如果new res this指向 实例
 // console.log(f)
 /*
   var obj1 = {
