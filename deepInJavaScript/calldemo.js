@@ -34,8 +34,8 @@ Function.prototype.bind2 = function (context) {
     console.log('=====', this, fBound.prototype)
     // console.log(this instanceof fNOP)
     var bindArg = Array.prototype.slice.call(arguments) //获取返回函数传入的参数
-    self.apply(this instanceof self ? this : context, args.concat(bindArg))
-    // self.apply(context, args.concat(bindArg))
+    return self.apply(this instanceof self ? this : context, args.concat(bindArg))
+    // return self.apply(context, args.concat(bindArg))
   }
   // fBound.prototype = this.prototype //原型链继承 fBound.prototype改变导致绑定函数原型也发生改变
   // fNOP.prototype = this.prototype // create函数继承
