@@ -48,9 +48,9 @@ Function.prototype.bind2 = function (context) {
   fBound.prototype = create1(this.prototype)
   return fBound
 }
-var res = bar.bind2(obj, 'Aaron', 'wen')//获取第二位开始的参数 
+// var res = bar.bind2(obj, 'Aaron', 'wen')//获取第二位开始的参数 
 // res('18')
-var f = new res('18') //闭包执行环境 globa 闭包内this指向window   如果new res this指向 实例
+// var f = new res('18') //闭包执行环境 globa 闭包内this指向window   如果new res this指向 实例
 // console.log(f)
 /*
   var obj1 = {

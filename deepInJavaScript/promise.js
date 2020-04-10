@@ -146,7 +146,7 @@ async function b() {
   const a = await p()
   console.log(a)
 }
-b()
+// b()
 
 
 
@@ -177,3 +177,103 @@ b()
 // })
 
 
+
+function NewPromise(executor) {
+    let _this = this;
+    this.state = 'pending';
+    this.value = undefined;
+    this.reason = undefined;
+    this.onFulfilledFunc = [];//保存成功回调
+    this.onRejectedFunc = [];//保存失败回调
+
+    executor(resolve, reject);
+
+    function resolve(value) {
+        if (_this.state === 'pending') {
+            _this.value = value;
+            //依次执行成功回调
+            _this.onFulfilledFunc.forEach(fn => fn(value));
+            _this.state = 'fulfilled';
+        }
+    }
+
+    function reject(reason) {
+        if (_this.state === 'pending') {
+            _this.reason = reason;
+            //依次执行失败回调
+            _this.onRejectedFunc.forEach(fn => fn(reason));
+            _this.state = 'rejected';
+        }
+    }
+}
+
+NewPromise.prototype.then = function (onFulfilled, onRejected) {
+    let self = this;
+    if (self.state === 'pending') {
+        if (typeof onFulfilled === 'function') {
+            return new NewPromise((resolve, reject) => {
+                self.onFulfilledFunc.push(() => {
+                    let x = onFulfilled(self.value);
+                    if (x instanceof Promise) {
+                        x.then(resolve, reject)
+                    } else {
+                        resolve(x)
+                    }
+                });
+            })
+        }
+        if (typeof onRejected === 'function') {
+            return new NewPromise((resolve, reject) => {
+                self.onRejectedFunc.push(() => {
+                    let x = onRejected(self.value);
+                    if (x instanceof Promise) {
+                        x.then(resolve, reject)
+                    } else {
+                        resolve(x)
+                    }
+                });
+            })
+        }
+    }
+    if (self.state === 'fulfilled') {
+        if (typeof onFulfilled === 'function') {
+            return new NewPromise((resolve, reject) => {
+                let x = onFulfilled(self.value);
+                if (x instanceof Promise) {
+                    x.then(resolve, reject)
+                } else {
+                    resolve(x)
+                }
+            })
+        }
+
+    }
+    if (self.state === 'rejected') {
+        if (typeof onRejected === 'function') {
+            return new NewPromise((resolve, reject) => {
+                let x = onRejected(self.reason);
+                if (x instanceof Promise) {
+                    x.then(resolve, reject)
+                } else {
+                    resolve(x)
+                }
+            })
+        }
+    }
+};
+
+let p1 = new NewPromise((resolve, reject) => {
+    console.log(1) // 输出 1
+    resolve(2);
+});
+
+p1.then(x => {
+    console.log(x); // 输出 2
+    return 3
+}).then(x => {
+    console.log(x); // 输出3
+    return 4;
+}).then(x => {
+    console.log(x) // 输出4
+    console.log('输出完毕')
+});
