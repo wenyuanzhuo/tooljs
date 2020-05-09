@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .icon-delete {
+        display: block;
+        width: 20px;
+        height: 20px;
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJ9JREFUeNpiVGn7z4AFsAFxNxDHQvmLgbgUiH+hK2RhwA66gDgPiQ9i/wDicnSFTDgMgNlsA8S2UHYKNoUgFxwBYmscBh1BYgsBMbp/j+ByAbGAkQXqTJjJjERqhKm3YcIh+Z8Am2AgEg1GDaCiAe+gtDU0LTAipQt0tjWyHiak3AZLuv8JYFjynoOcG8ugpoMykSABV7+HWlgL4gAEGAB4CiT14uCL4QAAAABJRU5ErkJggg==)
+        no-repeat center;
+        font-size: 0;
+        margin: auto;
+        position: relative;
+      }
+      .icon-delete::before {
+        content: attr(data-title);
+        position: absolute;
+        visibility: hidden;
+        transition: visibility 0s 0.2s;
+        background-color: #333;
+        color: white;
+        bottom: 100%;
+        left: 50%;
+        padding: 1px 5px;
+        transform: translateX(-50%);
+        font-size: 12px;
+        white-space: nowrap;
+        border-radius: 3px;
+        margin-bottom: 4px;
+      }
+      .icon-delete::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        margin-bottom: -4px;
+        transform: translateX(-50%);
+        border: 4px solid transparent;
+        border-top-color: #333;
+        transition: visibility 0s 0.2s;
+        visibility: hidden;
+      }
+      .icon-delete:hover::before,
+      .icon-delete:hover::after {
+        visibility: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <a class="icon-delete" data-title="删除"></a>
+  </body>
+</html>
