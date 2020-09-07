@@ -194,6 +194,7 @@ function NewPromise(executor) {
             //依次执行成功回调
             _this.onFulfilledFunc.forEach(fn => fn(value));
             _this.state = 'fulfilled';
+            console.log('resolve')
         }
     }
 
@@ -203,6 +204,7 @@ function NewPromise(executor) {
             //依次执行失败回调
             _this.onRejectedFunc.forEach(fn => fn(reason));
             _this.state = 'rejected';
+            console.log('reject')
         }
     }
 }
@@ -211,6 +213,7 @@ NewPromise.prototype.then = function (onFulfilled, onRejected) {
     let self = this;
     if (self.state === 'pending') {
         if (typeof onFulfilled === 'function') {
+          console.log(222222)
             return new NewPromise((resolve, reject) => {
                 self.onFulfilledFunc.push(() => {
                     let x = onFulfilled(self.value);
@@ -240,6 +243,7 @@ NewPromise.prototype.then = function (onFulfilled, onRejected) {
             return new NewPromise((resolve, reject) => {
                 let x = onFulfilled(self.value);
                 if (x instanceof Promise) {
+                  console.log(1111111)
                     x.then(resolve, reject)
                 } else {
                     resolve(x)
@@ -269,11 +273,7 @@ let p1 = new NewPromise((resolve, reject) => {
 
 p1.then(x => {
     console.log(x); // 输出 2
-    return 3
+    return new Promise((resolve) => setTimeout(() => resolve('async'), 2000))
 }).then(x => {
-    console.log(x); // 输出3
-    return 4;
-}).then(x => {
-    console.log(x) // 输出4
-    console.log('输出完毕')
-});
+  console.log(x)
+})
