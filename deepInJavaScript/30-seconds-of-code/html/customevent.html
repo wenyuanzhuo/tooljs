@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>custom event</title>
+</head>
+<body>
+    <div class="app">
+        <text>我是两个页面的公共部分</text>
+        <br/>
+        <input type="text"/>
+        <button class="btn">点击</button>
+    </div>
+    <script>
+        const appDom = document.querySelector('.app')
+        const inputDom = document.querySelector('input')
+        const btnDom = document.querySelector('.btn')
+       
+        function parseUrl() {
+            var a = document.createElement('a')
+            a.href = '//www.baidu.com'
+            a.innerText = '百度'
+
+            return a
+        }
+        var dom = parseUrl()
+
+        
+        // window.addEventListener('popstate', function () { // window.onpopstate
+        //     console.log('has return')
+        // })
+
+        window.addEventListener('route:page', function (e) {
+            console.log(e.detail)
+            appDom.removeChild(inputDom)
+            appDom.removeChild(btnDom)
+            appDom.append(dom)
+        })
+    
+        btnDom.addEventListener('click', function () {
+            window.dispatchEvent(createCustomEvent({ text: inputDom.value }, "route:page"))
+
+            window.onpopstate = function(e) {
+                alert(2);
+                console.log(window.location.pathname)
+
+                appDom.removeChild(dom)
+                appDom.append(inputDom)
+                appDom.append(btnDom)
+            }
+
+            window.history.pushState({ foo: "bar" }, "page 2", "customevent2.html");  
+        })
+
+
+        function createCustomEvent(state, methodsName) {
+            let evt
+
+            evt = new CustomEvent(methodsName, { detail: state })
+
+
+            return evt
+        }
+        
+    </script>
+</body>
+</html>

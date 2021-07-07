@@ -30,6 +30,9 @@ new Promise(function (resolve) {//first macrotask
         console.log(7);
     }, 0);
 })
+process.nextTick(function() {
+    console.log(15)
+})
 setTimeout(function () {
     console.log(14);
 }, 0);

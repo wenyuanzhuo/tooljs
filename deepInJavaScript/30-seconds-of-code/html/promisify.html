@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>异步promise</title>
+    <style>
+        button {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="j">点击生成modal</button>
+    <button class="k">点击触发modal按钮</button>
+</body>
+<script>
+    const domJ = document.querySelector('.j')
+    const domK = document.querySelector('.k')
+    const ctx = {
+        callback: null,
+    }
+
+    function Modal() {
+        return new Promise((resolve, reject) => {
+            ctx.callback = () => resolve('success')
+        })
+    }
+
+    Modal.confirm = () => {
+        return Modal()
+    }
+
+    
+
+    domJ.addEventListener('click', function () {
+        Modal.confirm()
+        .then(() => {
+            console.log(2222)
+        })
+    })
+    domK.addEventListener('click', function () {
+        console.log(ctx.callback)
+        ctx.callback()
+    })
+</script>
+</html>

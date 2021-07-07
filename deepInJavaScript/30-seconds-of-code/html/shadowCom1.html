@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        zxx-info::part(img) {
+            width: 81px; height: 100px;
+        }
+        zxx-info::part(description) {
+            display: flow-root;
+            color: deepskyblue;
+            font-family: system-ui;
+        }
+        /* 无效 */
+        zxx-info::part(description) p {
+            color: red;
+        }
+        /* 有效 */
+        zxx-info p {
+            border-bottom: 1px dashed;
+        }
+
+
+
+        tabbed-custom-element::part(tab) {
+            color: #0c0dcc;
+            border-bottom: transparent solid 2px;
+        }
+
+        tabbed-custom-element::part(tab):hover {
+            background-color: #0c0d19;
+            border-color: #0c0d33;
+        }
+
+        tabbed-custom-element::part(tab):hover:active {
+            background-color: #0c0d33;
+        }
+
+        tabbed-custom-element::part(tab):focus {
+            box-shadow:
+                0 0 0 1px #0a84ff inset,
+                0 0 0 1px #0a84ff,
+                0 0 0 4px rgba(10, 132, 255, 0.3);
+        }
+
+        tabbed-custom-element::part(active) {
+            color: #0060df;
+            border-color: #0a84ff !important;
+        }
+    </style>
+</head>
+<body>
+    <zxx-info>
+        <p slot="description">张鑫旭-鑫空间-鑫生活</p>
+        <p slot="description">帅锅一枚</p>
+        <p slot="description">文字颜色红色么？下划线有了么？</p>
+    </zxx-info>
+    
+    <template id="tplZxxInfo">
+        <style> 
+            :host { display: flow-root; }
+            img { float: left; margin-right: 10px; }
+            p { margin: .5em 0;}
+        </style>
+        <img part="img" src="zxx.jpg">
+        <slot name="description" part="description">这是显示描述信息</slot>
+    </template>
+
+
+    <template id="tabbed-custom-element">
+        <style type="text/css">
+            *, ::before, ::after {
+                box-sizing: border-box;
+                padding: 1rem;
+            }
+            :host {
+                display: flex;
+            }
+        </style>
+        <div part="tab active">Tab 1</div>
+        <div part="tab">Tab 2</div>
+        <div part="tab">Tab 3</div>
+    </template>
+        
+    <tabbed-custom-element></tabbed-custom-element>
+
+    <script>
+
+         // 定义<zxx-info>
+        class ZxxInfoElement extends HTMLElement {
+            constructor() {
+                super();
+                // 内部显示信息    
+                let template = document.getElementById('tplZxxInfo');
+                let templateContent = template.content;
+        
+                const shadowRoot = this.attachShadow({mode: 'open'}).appendChild(templateContent.cloneNode(true));
+            }
+        };
+        // 注册
+        customElements.define('zxx-info', ZxxInfoElement);
+
+        // console.log(document.currentScript, document.currentScript.ownerDocument)
+
+        let template = document.querySelector("#tabbed-custom-element");
+
+        customElements.define(template.id, class extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: "open" });
+                this.shadowRoot.appendChild(template.content);
+            }
+        });
+    </script>
+</body>
+</html>

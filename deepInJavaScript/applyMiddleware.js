@@ -1,7 +1,6 @@
 const compose = (...chain) => {
   return (arg) => chain.reduceRight((composed, f) => f(composed(arg)))
 }
-console.log(compose((f) => f + 1, (g) => g + 1)(1))
 function appleMiddleware([...middlewares]) {
   const store = {
     dispatch(action) {

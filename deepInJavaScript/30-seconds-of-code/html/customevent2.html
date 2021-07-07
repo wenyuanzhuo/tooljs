@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <a href="//www.baidu.com">百度</a> -->
+    
+    <script>
+        // function parseUrl() {
+        //     var a = document.createElement('a')
+        //     a.href = '//www.baidu.com'
+        //     a.innerText = '百度'
+
+        //     return a
+        // }
+        // var dom = parseUrl()
+
+        // document.body.append(dom)
+
+        window.onpopstate = function(e) {
+            alert(1);
+            console.log(window.location.pathname)
+        }
+    </script>
+</body>
+</html>
